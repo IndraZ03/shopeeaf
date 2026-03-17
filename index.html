@@ -382,22 +382,38 @@
             filterProducts();
         }
 
+        // --- KONFIGURASI GOOGLE SHEETS ---
+        // Paste URL Web App dari Google Apps Script di dalam tanda kutip di bawah ini:
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyZZ8_H1PGDwsWrIH6TfxzlDJXLiZYoZBNbl4KjoAakup6CFo094dBURD1pyOYB1ww/exec'; 
+
         // --- INISIALISASI PERTAMA ---
         async function loadData() {
             try {
-                // Cek sinkronisasi dari localStorage jika ada pembaruan produk dari halaman input
-                const localData = localStorage.getItem('lilyshop_db');
-                if (localData) {
-                    products = JSON.parse(localData);
-                } else {
-                    const response = await fetch('database.json');
+                if (SCRIPT_URL) {
+                    // Ambil dari Google Sheets
+                    const response = await fetch(SCRIPT_URL);
                     if (response.ok) {
                         products = await response.json();
+                        // Simpan ke local storage sebagai backup otomatis
                         localStorage.setItem('lilyshop_db', JSON.stringify(products));
+                    }
+                } else {
+                    // Fallback jika belum menautkan Google Sheets (hanya mengambil dari localStorage/JSON lokal)
+                    const localData = localStorage.getItem('lilyshop_db');
+                    if (localData) {
+                        products = JSON.parse(localData);
+                    } else {
+                        const response = await fetch('database.json');
+                        if (response.ok) {
+                            products = await response.json();
+                            localStorage.setItem('lilyshop_db', JSON.stringify(products));
+                        }
                     }
                 }
             } catch (err) {
-                console.warn('Gagal ambil json, menggunakan default.', err);
+                console.warn('Gagal ambil API Google Sheets. Menggunakan file lokal.', err);
+                const localData = localStorage.getItem('lilyshop_db');
+                if (localData) products = JSON.parse(localData);
             }
             renderTabs();
             renderProducts(products);

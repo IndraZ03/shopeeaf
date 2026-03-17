@@ -128,11 +128,29 @@
     <script>
         lucide.createIcons();
         
+        // --- KONFIGURASI GOOGLE SHEETS ---
+        // Paste URL Web App dari Google Apps Script di dalam tanda kutip di bawah ini:
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyZZ8_H1PGDwsWrIH6TfxzlDJXLiZYoZBNbl4KjoAakup6CFo094dBURD1pyOYB1ww/exec';
+
         let currentBase64 = '';
         let products = [];
 
-        // Inisialisasi data dari localStorage atau database.json
+        // Inisialisasi data 
         async function initData() {
+            if (SCRIPT_URL) {
+                try {
+                    const res = await fetch(SCRIPT_URL);
+                    if (res.ok) {
+                        products = await res.json();
+                        localStorage.setItem('lilyshop_db', JSON.stringify(products));
+                        return;
+                    }
+                } catch (e) {
+                    console.log("Gagal memuat dari Google Sheets, jatuh kembali ke data lokal");
+                }
+            }
+            
+            // Fallback
             const localData = localStorage.getItem('lilyshop_db');
             if (localData) {
                 products = JSON.parse(localData);
@@ -143,30 +161,57 @@
                         products = await res.json();
                         localStorage.setItem('lilyshop_db', JSON.stringify(products));
                     }
-                } catch (e) {
-                    console.log("Belum ada data database.json atau gagal di-load.");
-                }
+                } catch (e) {}
             }
         }
         initData();
 
-        // Image Preview & Base64 Conversion
+        // Image Preview & Base64 Conversion (Dengan Kompresi agar muat di Google Sheets)
         document.getElementById('image').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(event) {
-                    currentBase64 = event.target.result;
-                    document.getElementById('imagePreview').src = currentBase64;
-                    document.getElementById('previewContainer').classList.remove('hidden');
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        // Kompres maksimal dimensi 500x500
+                        const MAX_WIDTH = 500;
+                        const MAX_HEIGHT = 500;
+                        let width = img.width;
+                        let height = img.height;
+
+                        if (width > height && width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        } else if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        // Kompres menggunakan JPEG kualitas 0.6
+                        currentBase64 = canvas.toDataURL('image/jpeg', 0.6);
+                        
+                        document.getElementById('imagePreview').src = currentBase64;
+                        document.getElementById('previewContainer').classList.remove('hidden');
+                    }
+                    img.src = event.target.result;
                 };
                 reader.readAsDataURL(file);
             }
         });
 
         // Simpan Form
-        document.getElementById('productForm').addEventListener('submit', function(e) {
+        document.getElementById('productForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
             
             const title = document.getElementById('title').value;
             const category = document.getElementById('category').value;
@@ -178,19 +223,41 @@
                 return;
             }
 
+            // Loading state
+            submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 md:w-5 md:h-5 animate-spin"></i> Menyimpan...';
+            lucide.createIcons();
+            submitBtn.disabled = true;
+
             const newProduct = {
-                id: Date.now(),
+                id: Date.now().toString(),
                 title: title,
                 image: currentBase64,
                 link: link,
                 category: category
             };
 
+            let toastMsg = "Data berhasil disimpan di mode *Offline*. Hubungkan Google Sheets untuk Cloud.";
+
+            if (SCRIPT_URL) {
+                try {
+                    await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        body: JSON.stringify(newProduct),
+                        mode: 'no-cors' // Tidak bisa cek balikan (CORS), tapi request terkirim
+                    });
+                    toastMsg = "Berhasil! Produk tersimpan di Google Sheets dan sistem lokal.";
+                } catch (error) {
+                    console.error("Error to Google Sheets:", error);
+                    alert("Terjadi kesalahan saat menyimpan ke Cloud. Data akan disimpan lokal.");
+                }
+            }
+
+            // Simpan cache lokal
             products.push(newProduct);
             localStorage.setItem('lilyshop_db', JSON.stringify(products));
 
             // Show Toast Notification
-            document.getElementById('toastMessage').innerText = "Produk berhasil ditambahkan ke sistem memori!";
+            document.getElementById('toastMessage').innerText = toastMsg;
             const toast = document.getElementById('toast');
             toast.classList.remove('translate-y-20', 'opacity-0');
             
@@ -202,6 +269,9 @@
             this.reset();
             currentBase64 = '';
             document.getElementById('previewContainer').classList.add('hidden');
+            
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
         });
 
         // Download database.json
