@@ -4,7 +4,7 @@
 // Sorted by number (ascending)
 // ============================================
 
-const { createClient } = require('@neondatabase/serverless');
+const { neon } = require('@neondatabase/serverless');
 
 exports.handler = async (event, context) => {
   // Handle CORS preflight
@@ -26,7 +26,7 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const sql = createClient(process.env.DATABASE_URL);
+    const sql = neon(process.env.DATABASE_URL);
 
     const result = await sql`
       SELECT id, number, title, image_url, shopee_link, created_at

@@ -4,7 +4,7 @@
 // Creates the 'products' table in Netlify DB (Neon)
 // ============================================
 
-const { createClient } = require('@neondatabase/serverless');
+const { neon } = require('@neondatabase/serverless');
 
 async function setupDatabase() {
   const DATABASE_URL = process.env.DATABASE_URL;
@@ -24,7 +24,7 @@ async function setupDatabase() {
   console.log('');
 
   try {
-    const sql = createClient(DATABASE_URL);
+    const sql = neon(DATABASE_URL);
 
     // Create products table
     console.log('📦 Creating products table...');

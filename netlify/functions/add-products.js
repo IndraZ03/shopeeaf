@@ -6,7 +6,7 @@
 //   3. Inserts all products into Netlify DB
 // ============================================
 
-const { createClient } = require('@neondatabase/serverless');
+const { neon } = require('@neondatabase/serverless');
 const busboy = require('busboy');
 const cloudinary = require('cloudinary').v2;
 
@@ -62,7 +62,7 @@ exports.handler = async (event, context) => {
     }
 
     // Connect to database
-    const sql = createClient(process.env.DATABASE_URL);
+    const sql = neon(process.env.DATABASE_URL);
 
     // Get the current max number
     const maxResult = await sql`

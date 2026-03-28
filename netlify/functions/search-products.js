@@ -4,7 +4,7 @@
 // Returns matching suggestions for typeahead
 // ============================================
 
-const { createClient } = require('@neondatabase/serverless');
+const { neon } = require('@neondatabase/serverless');
 
 exports.handler = async (event, context) => {
   // Handle CORS preflight
@@ -38,7 +38,7 @@ exports.handler = async (event, context) => {
       };
     }
 
-    const sql = createClient(process.env.DATABASE_URL);
+    const sql = neon(process.env.DATABASE_URL);
 
     // Clean query - remove # prefix for number search
     const cleanQuery = query.replace('#', '');
