@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- ============================================
+       Spill by Lily - Admin Input Page
+       Upload & manage products
+       ============================================ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Spill by Lily - Tambah produk baru ke koleksi Lily 💕" />
+  <meta name="robots" content="noindex, nofollow" />
+  
+  <title>Add Product 💕 | Spill by Lily</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💕</text></svg>" />
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'lily-pink': {
+              50: '#FFF5F5',
+              100: '#FFE4E1',
+              200: '#FFBCD1',
+              300: '#FFB6C1',
+              400: '#FF8FAB',
+              500: '#FF6B8A',
+              600: '#E8527A',
+            },
+            'rose-gold': '#B76E79',
+            'rose-gold-light': '#D4A0A7',
+          },
+          fontFamily: {
+            'cursive': ['Dancing Script', 'cursive'],
+            'heading': ['Playfair Display', 'serif'],
+            'body': ['Poppins', 'sans-serif'],
+          },
+          borderRadius: {
+            '3xl': '24px',
+            '4xl': '32px',
+          },
+        }
+      }
+    }
+  </script>
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/custom.css" />
+</head>
+
+<body class="font-body bg-lily-pink-50 min-h-screen">
+  
+  <!-- ======================== NAVBAR ======================== -->
+  <nav class="navbar px-4 sm:px-6 lg:px-8 py-3" id="navbar">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="nav-logo" id="nav-logo-admin">
+        <span class="heart-icon">♥</span>
+        Spill by Lily
+      </a>
+      
+      <!-- Nav Links -->
+      <div class="flex items-center gap-2">
+        <a href="index.html" class="nav-link" id="nav-home-admin">Home</a>
+        <a href="input.html" class="nav-link active" id="nav-add-admin">Add Product</a>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- ======================== PAGE HEADER ======================== -->
+  <section class="py-10 sm:py-14 px-4 relative overflow-hidden" style="background: var(--gradient-hero);">
+    <!-- Decorative elements -->
+    <span class="deco-heart" style="top:15%;left:10%;">♥</span>
+    <span class="deco-heart" style="top:25%;right:15%;">♥</span>
+    <span class="deco-sparkle" style="bottom:20%;left:25%;">✧</span>
+    <span class="deco-sparkle" style="top:40%;right:10%;">✦</span>
+    
+    <div class="max-w-2xl mx-auto text-center relative z-10">
+      <div class="bow-decoration">
+        <span></span>
+      </div>
+      <h1 class="font-heading text-2xl sm:text-3xl font-bold text-[var(--text-dark)] mb-3">
+        ✨ Tambah Produk Baru ✨
+      </h1>
+      <p class="font-body text-sm sm:text-base text-[var(--text-light)]">
+        Upload produk ke koleksi Spill by Lily. Nomor akan digenerate otomatis! 💕
+      </p>
+      <p class="text-xs text-[var(--rose-gold-light)] mt-2 font-medium" id="product-count-display">
+        0 produk siap dikirim
+      </p>
+    </div>
+  </section>
+  
+  <!-- ======================== FORM SECTION ======================== -->
+  <section class="py-8 sm:py-12 px-4 sm:px-6 relative z-10">
+    <div class="max-w-4xl mx-auto">
+      
+      <!-- Product Blocks Container -->
+      <div id="products-container" class="space-y-6"></div>
+      
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
+        <!-- Add Product Button -->
+        <button 
+          class="btn-secondary" 
+          id="add-product-btn"
+        >
+          ➕ Tambah Product
+        </button>
+        
+        <!-- Submit All Button -->
+        <button 
+          class="btn-primary text-lg px-10 py-4" 
+          id="submit-all-btn"
+          style="box-shadow: 0 8px 30px rgba(255, 143, 171, 0.35);"
+        >
+          💕 Kirim Semua Products
+        </button>
+      </div>
+      
+      <!-- Tips Card -->
+      <div class="mt-10 p-6 rounded-3xl bg-white border border-[rgba(255,188,209,0.2)] shadow-sm max-w-md mx-auto text-center animate-on-scroll">
+        <h3 class="font-heading text-lg font-semibold text-[var(--text-dark)] mb-3">💡 Tips</h3>
+        <ul class="text-sm text-[var(--text-medium)] space-y-2 text-left">
+          <li>📸 Upload gambar berkualitas baik (rasio 4:5)</li>
+          <li>✍️ Gunakan judul yang menarik dan deskriptif</li>
+          <li>🔗 Pastikan link Shopee valid dan bisa diakses</li>
+          <li>📦 Kamu bisa menambah banyak produk sekaligus!</li>
+        </ul>
+      </div>
+      
+    </div>
+  </section>
+  
+  <!-- ======================== FOOTER ======================== -->
+  <footer class="footer py-8 px-4 text-center">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col items-center gap-3">
+        <p class="footer-text">
+          Made with 💕 by Lily
+        </p>
+        <p class="text-xs text-lily-pink-400 opacity-60">
+          © 2026 Spill by Lily. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- ======================== SCRIPTS ======================== -->
+  <script src="assets/js/input.js"></script>
+  
+  <!-- Navbar scroll effect -->
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+  </script>
+  
+</body>
+</html>

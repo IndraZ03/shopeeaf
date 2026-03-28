@@ -1,0 +1,19 @@
+{
+  "name": "spill-by-lily",
+  "version": "1.0.0",
+  "description": "Spill by Lily - Cutest Product Picks 💕",
+  "private": true,
+  "scripts": {
+    "dev": "netlify dev",
+    "deploy": "netlify deploy --prod",
+    "db:setup": "node scripts/setup-db.js"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.0",
+    "busboy": "^1.6.0",
+    "cloudinary": "^1.41.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}

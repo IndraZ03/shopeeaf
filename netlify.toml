@@ -1,0 +1,37 @@
+# ============================================
+# Netlify Configuration - Spill by Lily
+# ============================================
+
+[build]
+  # No build command needed (static HTML + Netlify Functions)
+  publish = "."
+  functions = "netlify/functions"
+
+# Environment variables (set these in Netlify Dashboard)
+# CLOUDINARY_CLOUD_NAME = "your-cloud-name"
+# CLOUDINARY_API_KEY = "your-api-key"
+# CLOUDINARY_API_SECRET = "your-api-secret"
+
+# Headers for CORS and security
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type"
+
+# Redirects: route /api/* to Netlify Functions
+[[redirects]]
+  from = "/api/get-products"
+  to = "/.netlify/functions/get-products"
+  status = 200
+
+[[redirects]]
+  from = "/api/add-products"
+  to = "/.netlify/functions/add-products"
+  status = 200
+
+[[redirects]]
+  from = "/api/search-products"
+  to = "/.netlify/functions/search-products"
+  status = 200

@@ -1,448 +1,251 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lilyshop - Aesthetic Affiliate Showcase</title>
-    
-    <!-- Tailwind CSS untuk Styling Modern -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <style>
-        /* Custom CSS untuk Nuansa Estetik & Animasi */
-        :root {
-            --pink-light: #fff0f5;
-            --pink-primary: #ffb6c1;
-            --pink-dark: #ff69b4;
+  <!-- ============================================
+       Spill by Lily - User Page
+       Aesthetic: Soft Pink, Romantic, Cute, Modern
+       ============================================ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Spill by Lily - Temukan produk terkurasi paling cute dan aesthetic pilihan Lily. Shop langsung di Shopee! 💕" />
+  <meta name="keywords" content="spill, lily, shopee, aesthetic, cute, produk, rekomendasi, review" />
+  <meta name="author" content="Spill by Lily" />
+  <meta name="theme-color" content="#FFB6C1" />
+  <meta property="og:title" content="Spill by Lily 💕" />
+  <meta property="og:description" content="Temukan produk terkurasi paling cute dan aesthetic pilihan Lily." />
+  <meta property="og:type" content="website" />
+  
+  <title>Spill by Lily 💕 | Cutest Product Picks</title>
+  
+  <!-- Favicon (heart emoji as SVG) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💕</text></svg>" />
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'lily-pink': {
+              50: '#FFF5F5',
+              100: '#FFE4E1',
+              200: '#FFBCD1',
+              300: '#FFB6C1',
+              400: '#FF8FAB',
+              500: '#FF6B8A',
+              600: '#E8527A',
+            },
+            'rose-gold': '#B76E79',
+            'rose-gold-light': '#D4A0A7',
+          },
+          fontFamily: {
+            'cursive': ['Dancing Script', 'cursive'],
+            'heading': ['Playfair Display', 'serif'],
+            'body': ['Poppins', 'sans-serif'],
+          },
+          borderRadius: {
+            '3xl': '24px',
+            '4xl': '32px',
+          },
         }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #fff0f5;
-            background-image: 
-                linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 228, 225, 0.6) 50%, rgba(253, 245, 230, 0.7) 100%),
-                url('https://images.unsplash.com/photo-1577085705353-834f31c778fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        .font-serif {
-            font-family: 'Playfair Display', serif;
-        }
-
-        /* Glassmorphism Effect yang Diperhalus */
-        .glass {
-            background: rgba(255, 255, 255, 0.55);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 8px 32px 0 rgba(255, 182, 193, 0.2);
-        }
-
-        /* Card Hover Animation */
-        .product-card {
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-        }
-        .product-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 182, 193, 0.8);
-            box-shadow: 0 20px 30px -5px rgba(255, 105, 180, 0.2), 0 10px 10px -5px rgba(255, 105, 180, 0.1);
-        }
-
-        .product-image {
-            transition: transform 0.7s ease;
-        }
-        .product-card:hover .product-image {
-            transform: scale(1.08);
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #ffb6c1; 
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ff69b4; 
-        }
-
-        /* Search Recommendations Dropdown */
-        .search-recom-enter {
-            opacity: 0;
-            transform: translateY(-10px);
-            animation: fadeInDown 0.3s forwards;
-        }
-
-        @keyframes fadeInDown {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Floating Animation for Header Icon */
-        .float-anim {
-            animation: floating 3s ease-in-out infinite;
-        }
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
-            100% { transform: translateY(0px); }
-        }
-
-        /* Pulse Animation for Sparkles */
-        .sparkle-anim {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.8); }
-        }
-        
-        /* Fade in for elements */
-        .fade-in-item {
-            opacity: 0;
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Hiasan Dinamis: Animated Background Blobs */
-        .blob-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.6;
-            animation: blobMove 12s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .blob-1 {
-            top: -10%; left: -10%; width: 50vw; height: 50vw; background: #ffb6c1; animation-delay: 0s;
-        }
-        .blob-2 {
-            top: 40%; right: -15%; width: 45vw; height: 45vw; background: #ffc0cb; animation-delay: -4s;
-        }
-        .blob-3 {
-            bottom: -20%; left: 15%; width: 55vw; height: 55vw; background: #fff0f5; animation-delay: -8s;
-        }
-        @keyframes blobMove {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(80px, 50px) scale(1.1); }
-            100% { transform: translate(-40px, 80px) scale(0.9); }
-        }
-
-        /* Hiasan Dinamis: Animasi Kelopak Lily Berjatuhan */
-        .petal {
-            position: fixed;
-            background: linear-gradient(135deg, rgba(255, 182, 193, 0.8), rgba(255, 105, 180, 0.5));
-            border-radius: 15px 0 15px 0;
-            pointer-events: none;
-            z-index: 1;
-            box-shadow: 0 2px 4px rgba(255, 105, 180, 0.2);
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            80% { opacity: 0.8; }
-            100% { transform: translateY(110vh) translateX(100px) rotate(360deg); opacity: 0; }
-        }
-    </style>
+      }
+    }
+  </script>
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/custom.css" />
 </head>
-<body class="text-gray-800 pb-20 relative">
 
-    <!-- Hiasan Latar Belakang Gelembung Estetik -->
-    <div class="blob-container">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
+<body class="font-body bg-lily-pink-50 min-h-screen">
+  
+  <!-- ======================== NAVBAR ======================== -->
+  <nav class="navbar px-4 sm:px-6 lg:px-8 py-3" id="navbar">
+    <div class="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-3">
+      <!-- Logo -->
+      <a href="index.html" class="nav-logo" id="nav-logo">
+        <span class="heart-icon">♥</span>
+        Spill by Lily
+      </a>
+      
+      <!-- Nav Links -->
+      <div class="flex items-center gap-2">
+        <a href="index.html" class="nav-link active" id="nav-home">Home</a>
+        <a href="input.html" class="nav-link" id="nav-add">Add Product</a>
+      </div>
+      
+      <!-- Search Bar (Desktop) -->
+      <div class="search-container hidden sm:block">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          id="search-input" 
+          class="search-input" 
+          placeholder="Cari produk atau ketik #nomor…"
+          autocomplete="off"
+        />
+        <div class="search-dropdown" id="search-dropdown"></div>
+      </div>
     </div>
-
-    <!-- Header -->
-    <header class="glass sticky top-0 z-50 py-3 px-4 md:py-4 md:px-6 mb-6 md:mb-8 shadow-sm">
-        <div class="max-w-6xl mx-auto flex justify-between items-center relative z-10">
-            <div class="flex items-center gap-1.5 md:gap-2 cursor-pointer group">
-                <!-- Custom SVG Lily Icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="text-pink-500 float-anim w-6 h-6 md:w-8 md:h-8 drop-shadow-sm group-hover:text-pink-600 transition-colors" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C12 2 7 7 7 12C7 15 9.5 17 12 17C14.5 17 17 15 17 12C17 7 12 2 12 2Z" opacity="0.6"/>
-                    <path d="M12 22C12 22 10 18 10 15C10 13 11 12 12 12C13 12 14 13 14 15C14 18 12 22 12 22Z"/>
-                    <path d="M12 17C12 17 7 19 4 16C1 13 3 8 3 8C3 8 6 11 9 12C11.5 12.8 12 17 12 17Z" opacity="0.8"/>
-                    <path d="M12 17C12 17 17 19 20 16C23 13 21 8 21 8C21 8 18 11 15 12C12.5 12.8 12 17 12 17Z" opacity="0.8"/>
-                </svg>
-                <h1 class="font-serif text-xl md:text-2xl font-bold text-pink-600 tracking-wide">Lilyshop<span class="text-pink-400">.</span></h1>
-            </div>
-            <a href="#" class="text-xs md:text-sm font-medium text-pink-500 hover:text-pink-700 transition relative overflow-hidden group">
-                Tentang Kami
-                <span class="absolute bottom-0 left-0 w-full h-0.5 bg-pink-400 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
-            </a>
+    
+    <!-- Search Bar (Mobile) -->
+    <div class="sm:hidden mt-3 px-1">
+      <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          id="search-input-mobile" 
+          class="search-input" 
+          placeholder="Cari produk atau ketik #nomor…"
+          autocomplete="off"
+        />
+        <div class="search-dropdown" id="search-dropdown-mobile"></div>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- ======================== HERO SECTION ======================== -->
+  <section class="hero-section py-16 sm:py-24 px-4 relative" id="hero-section">
+    <!-- Decorative floating elements -->
+    <span class="deco-heart">♥</span>
+    <span class="deco-heart">♥</span>
+    <span class="deco-heart">♥</span>
+    <span class="deco-heart">♥</span>
+    <span class="deco-heart">♥</span>
+    <span class="deco-heart">♥</span>
+    <span class="deco-sparkle">✧</span>
+    <span class="deco-sparkle">✦</span>
+    <span class="deco-sparkle">✧</span>
+    <span class="deco-sparkle">✦</span>
+    
+    <div class="max-w-3xl mx-auto text-center relative z-10">
+      <!-- Bow decoration -->
+      <div class="bow-decoration">
+        <span></span>
+      </div>
+      
+      <h1 class="hero-tagline mb-4">
+        <span class="highlight">Spill Your Love</span><br/>
+        with Lily's Cutest Picks 💕
+      </h1>
+      
+      <p class="hero-subtitle mx-auto mb-8">
+        Temukan koleksi produk terkurasi yang super cute, aesthetic, dan wajib kamu punya! ✨🌸
+      </p>
+      
+      <!-- CTA Button -->
+      <a href="#products-section" class="btn-primary inline-flex" id="hero-cta">
+        🛍️ Explore Products
+      </a>
+    </div>
+  </section>
+  
+  <!-- ======================== PRODUCTS SECTION ======================== -->
+  <section class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 relative z-10" id="products-section">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- Section Header -->
+      <div class="text-center mb-10 animate-on-scroll">
+        <div class="bow-decoration">
+          <span></span>
         </div>
-    </header>
-
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        <h2 class="section-title">
+          ✨ Lily's Cutest Collection ✨
+        </h2>
+        <p class="section-subtitle" id="product-count">Loading produk...</p>
+      </div>
+      
+      <!-- Loading Skeletons -->
+      <div class="product-grid" id="loading-container">
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+        <div class="skeleton skeleton-card"></div>
+      </div>
+      
+      <!-- Product Grid (populated by JS) -->
+      <div class="product-grid" id="product-grid" style="display: none;"></div>
+      
+      <!-- Empty State -->
+      <div class="empty-state" id="empty-state" style="display: none;">
+        <div class="empty-state-icon">🌸</div>
+        <p class="empty-state-text">Belum ada produk tersedia</p>
+        <p class="text-sm text-lily-pink-400 mt-2">Produk akan segera hadir! 💕</p>
+      </div>
+      
+    </div>
+  </section>
+  
+  <!-- ======================== FOOTER ======================== -->
+  <footer class="footer py-8 px-4 text-center">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col items-center gap-3">
+        <p class="footer-text">
+          Made with 💕 by Lily
+        </p>
+        <p class="text-xs text-lily-pink-400 opacity-60">
+          © 2026 Spill by Lily. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- ======================== SCRIPTS ======================== -->
+  <script src="assets/js/app.js"></script>
+  
+  <!-- Mobile search sync -->
+  <script>
+    // Sync mobile and desktop search inputs
+    const mobileSearch = document.getElementById('search-input-mobile');
+    const mobileDropdown = document.getElementById('search-dropdown-mobile');
+    
+    if (mobileSearch) {
+      mobileSearch.addEventListener('input', (e) => {
+        // Reuse the same search logic
+        const query = e.target.value.trim();
+        if (searchTimeout) clearTimeout(searchTimeout);
         
-        <!-- Hero & Search Section -->
-        <section class="text-center mb-16 pt-4 fade-in-item" style="animation-delay: 0.1s;">
-            <div class="inline-flex items-center justify-center gap-2 mb-4">
-                <i data-lucide="sparkles" class="w-5 h-5 text-pink-400 sparkle-anim"></i>
-                <span class="text-pink-500 font-medium tracking-wider text-sm uppercase">Spall spill by Lily</span>
-                <i data-lucide="sparkles" class="w-5 h-5 text-pink-400 sparkle-anim" style="animation-delay: 1s;"></i>
-            </div>
-            <div class="relative max-w-2xl mx-auto z-40 group">
-                <div class="relative flex items-center">
-                    <i data-lucide="search" class="absolute left-5 md:left-6 text-pink-400 w-4 h-4 md:w-5 md:h-5 transition-transform group-focus-within:scale-110"></i>
-                    <input 
-                        type="text" 
-                        id="searchInput" 
-                        placeholder="Cari produk impianmu..." 
-                        class="w-full pl-11 md:pl-14 pr-4 md:pr-6 py-3.5 md:py-4 rounded-full border border-pink-100 bg-white/70 backdrop-blur-md focus:bg-white focus:outline-none focus:border-pink-300 shadow-xl shadow-pink-100/50 focus:shadow-pink-200/50 transition-all placeholder-gray-400 text-gray-700 text-sm md:text-base"
-                        autocomplete="off"
-                    >
-                </div>
-                
-                <!-- Search Recommendations -->
-                <div id="searchRecommendations" class="absolute w-full mt-3 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-pink-100 hidden text-left overflow-hidden search-recom-enter">
-                    <!-- Dinamis via JS -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Tabs Category -->
-        <div class="flex overflow-x-auto hide-scrollbar gap-2 md:gap-3 mb-8 md:mb-10 pb-4 md:pb-4 justify-start sm:justify-center fade-in-item px-1" style="animation-delay: 0.2s;" id="categoryTabs">
-            <!-- Dinamis via JS -->
-        </div>
-
-        <!-- Product Grid -->
-        <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 lg:gap-8">
-            <!-- Card produk akan dirender di sini oleh JavaScript -->
-        </div>
-
-        <!-- Empty State (Jika pencarian tidak ditemukan) -->
-        <div id="emptyState" class="hidden text-center py-20 fade-in-item">
-            <div class="bg-white/50 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
-                <i data-lucide="flower" class="w-12 h-12 text-pink-300"></i>
-            </div>
-            <h3 class="text-2xl font-serif font-bold text-gray-700 mb-2">Ups, tidak ditemukan</h3>
-            <p class="text-gray-500 text-lg">Coba cari dengan kata kunci estetik yang lain ya.</p>
-        </div>
-
-    </main>
-
-    <script>
-        // Inisialisasi Icons
-        lucide.createIcons();
-
-        // --- DATA AWAL KOSONG (DIAMBIL VIA FETCH ATAU LOCALSTORAGE) ---
-        let products = [];
-
-        const categories = ["Semua", "Fashion", "Kecantikan", "Dekorasi", "Aksesoris"];
-        let currentCategory = "Semua";
-
-        // --- ELEMEN DOM ---
-        const grid = document.getElementById('productGrid');
-        const emptyState = document.getElementById('emptyState');
-        const searchInput = document.getElementById('searchInput');
-        const searchRec = document.getElementById('searchRecommendations');
-        const tabsContainer = document.getElementById('categoryTabs');
-
-        // --- RENDER FUNGSI ---
-        
-        // Render Tabs
-        function renderTabs() {
-            tabsContainer.innerHTML = '';
-            categories.forEach(cat => {
-                const isActive = cat === currentCategory;
-                const btn = document.createElement('button');
-                btn.className = `whitespace-nowrap px-4 py-2 md:px-6 md:py-2.5 rounded-full text-xs md:text-sm font-medium transition-all shadow-md ${isActive ? 'bg-gradient-to-r from-pink-400 to-pink-500 text-white shadow-pink-300/50 scale-105' : 'glass text-gray-700 hover:bg-white/80'}`;
-                btn.innerText = cat;
-                btn.onclick = () => {
-                    currentCategory = cat;
-                    renderTabs();
-                    filterProducts();
-                };
-                tabsContainer.appendChild(btn);
-            });
+        searchTimeout = setTimeout(() => {
+          if (query.length === 0) {
+            filteredProducts = [...allProducts];
+            renderProducts(filteredProducts);
+            updateProductCount(filteredProducts.length);
+            if (mobileDropdown) mobileDropdown.classList.remove('active');
+            return;
+          }
+          
+          const results = searchProducts(query);
+          filteredProducts = results;
+          renderProducts(filteredProducts);
+          updateProductCount(filteredProducts.length);
+          
+          // Show mobile dropdown
+          if (mobileDropdown && results.length > 0) {
+            const suggestions = results.slice(0, 6);
+            mobileDropdown.innerHTML = suggestions.map(product => `
+              <div class="search-item" onclick="selectSearchItem('${product.number}'); document.getElementById('search-input-mobile').value = '#${product.number}'; document.getElementById('search-dropdown-mobile').classList.remove('active');">
+                <span class="search-item-number">#${product.number}</span>
+                <span class="search-item-title">${escapeHTML(product.title)}</span>
+              </div>
+            `).join('');
+            mobileDropdown.classList.add('active');
+          } else if (mobileDropdown) {
+            mobileDropdown.classList.remove('active');
+          }
+        }, 200);
+      });
+      
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.search-container') && mobileDropdown) {
+          mobileDropdown.classList.remove('active');
         }
-
-        // Render Produk Grid
-        function renderProducts(dataToRender) {
-            grid.innerHTML = '';
-            
-            if (dataToRender.length === 0) {
-                grid.classList.add('hidden');
-                emptyState.classList.remove('hidden');
-                return;
-            }
-
-            grid.classList.remove('hidden');
-            emptyState.classList.add('hidden');
-
-            dataToRender.forEach((product, index) => {
-                const delay = index * 0.08; // Cascade animation effect
-                const cardHtml = `
-                    <a href="${product.link}" target="_blank" rel="noopener noreferrer" class="product-card glass rounded-[16px] md:rounded-[24px] overflow-hidden block group fade-in-item" style="animation-delay: ${delay}s">
-                        <div class="relative aspect-[4/5] overflow-hidden bg-white/50 p-1.5 md:p-2">
-                            <img src="${product.image}" alt="${product.title}" class="product-image w-full h-full object-cover rounded-[12px] md:rounded-[18px]" onerror="this.src='https://via.placeholder.com/500x500?text=Lilyshop'">
-                            <!-- Overlay badge -->
-                            <div class="absolute top-3 right-3 md:top-4 md:right-4 bg-white/90 backdrop-blur-md text-[9px] md:text-xs font-semibold px-2 py-1 md:px-2.5 md:py-1.5 rounded-lg text-pink-500 shadow-sm flex items-center gap-1">
-                                <i data-lucide="shopping-bag" class="w-2.5 h-2.5 md:w-3.5 md:h-3.5"></i> <span class="hidden sm:inline">Shopee</span>
-                            </div>
-                        </div>
-                        <div class="p-3 md:p-5 flex flex-col h-[90px] md:h-[130px] justify-between bg-gradient-to-b from-transparent to-white/40">
-                            <h3 class="font-medium text-gray-800 text-xs sm:text-sm md:text-base line-clamp-2 leading-tight md:leading-snug group-hover:text-pink-600 transition-colors">${product.title}</h3>
-                            <div class="mt-2 text-right w-full flex justify-end">
-                                <span class="text-[10px] md:text-xs text-pink-500 font-semibold tracking-wide uppercase flex items-center gap-1 md:gap-1.5 group-hover:translate-x-1 transition-transform">
-                                    Cek <i data-lucide="arrow-right" class="w-3 h-3 md:w-3.5 md:h-3.5"></i>
-                                </span>
-                            </div>
-                        </div>
-                    </a>
-                `;
-                grid.insertAdjacentHTML('beforeend', cardHtml);
-            });
-            lucide.createIcons(); // Re-init icons for newly added HTML
-        }
-
-        // --- FITUR PENCARIAN & FILTER ---
-        function filterProducts() {
-            const query = searchInput.value.toLowerCase();
-            const filtered = products.filter(p => {
-                const matchName = p.title.toLowerCase().includes(query);
-                const matchCat = currentCategory === "Semua" || p.category === currentCategory;
-                return matchName && matchCat;
-            });
-            renderProducts(filtered);
-        }
-
-        // Fitur Rekomendasi Dinamis saat mengetik
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            filterProducts(); // Filter grid langsung
-
-            // Tampilkan Dropdown Rekomendasi
-            if (query.length > 0) {
-                // Ambil 4 judul teratas yg cocok
-                const recs = products.filter(p => p.title.toLowerCase().includes(query)).slice(0, 4);
-                
-                if (recs.length > 0) {
-                    searchRec.classList.remove('hidden');
-                    searchRec.innerHTML = recs.map((p, index) => `
-                        <div class="px-4 py-2.5 md:px-5 md:py-3 hover:bg-pink-50/80 cursor-pointer flex items-center gap-3 transition-colors text-xs md:text-sm text-gray-700 border-b border-pink-50/50 last:border-0" onclick="selectRecommendation('${p.title}')">
-                            <div class="bg-white p-1.5 rounded-md shadow-sm shrink-0">
-                                <img src="${p.image}" class="w-6 h-6 md:w-8 md:h-8 rounded object-cover" alt="thumb">
-                            </div>
-                            <span class="line-clamp-1">${p.title}</span>
-                        </div>
-                    `).join('');
-                } else {
-                    searchRec.classList.add('hidden');
-                }
-            } else {
-                searchRec.classList.add('hidden');
-            }
-        });
-
-        // Sembunyikan rekomendasi jika klik di luar
-        document.addEventListener('click', (e) => {
-            if (!searchInput.contains(e.target) && !searchRec.contains(e.target)) {
-                searchRec.classList.add('hidden');
-            }
-        });
-
-        function selectRecommendation(title) {
-            searchInput.value = title;
-            searchRec.classList.add('hidden');
-            filterProducts();
-        }
-
-        // --- KONFIGURASI GOOGLE SHEETS ---
-        // Paste URL Web App dari Google Apps Script di dalam tanda kutip di bawah ini:
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby0s1Q2dhPEg7T5QEguQov6Q3xxMfr6zH56EXbOeR0bhmCvpDtJTpNkDMLwL2OvXrU/exec'; 
-
-        // --- INISIALISASI PERTAMA ---
-        async function loadData() {
-            try {
-                if (SCRIPT_URL) {
-                    // Ambil dari Google Sheets
-                    const response = await fetch(SCRIPT_URL);
-                    if (response.ok) {
-                        products = await response.json();
-                        // Simpan ke local storage sebagai backup otomatis
-                        localStorage.setItem('lilyshop_db', JSON.stringify(products));
-                    }
-                } else {
-                    // Fallback jika belum menautkan Google Sheets (hanya mengambil dari localStorage/JSON lokal)
-                    const localData = localStorage.getItem('lilyshop_db');
-                    if (localData) {
-                        products = JSON.parse(localData);
-                    } else {
-                        const response = await fetch('database.json');
-                        if (response.ok) {
-                            products = await response.json();
-                            localStorage.setItem('lilyshop_db', JSON.stringify(products));
-                        }
-                    }
-                }
-            } catch (err) {
-                console.warn('Gagal ambil API Google Sheets. Menggunakan file lokal.', err);
-                const localData = localStorage.getItem('lilyshop_db');
-                if (localData) products = JSON.parse(localData);
-            }
-            renderTabs();
-            renderProducts(products);
-        }
-        
-        loadData();
-
-        // --- EFEK KELOPAK BUNGA LILY BERJATUHAN ---
-        function createPetals() {
-            const petalCount = 15; // Jumlah kelopak
-            for (let i = 0; i < petalCount; i++) {
-                const petal = document.createElement('div');
-                petal.className = 'petal';
-                
-                // Ukuran acak
-                const size = Math.random() * 12 + 8;
-                petal.style.width = `${size}px`;
-                petal.style.height = `${size}px`;
-                
-                // Posisi dan animasi acak
-                petal.style.left = `${Math.random() * 100}vw`;
-                petal.style.animationDuration = `${Math.random() * 8 + 8}s`;
-                petal.style.animationDelay = `${Math.random() * 5}s`;
-                
-                document.body.appendChild(petal);
-            }
-        }
-        createPetals();
-
-    </script>
+      });
+    }
+  </script>
+  
 </body>
 </html>
